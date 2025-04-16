@@ -39,6 +39,7 @@ export default function FormPropsTextFields() {
               id="title"
               label="Title"
               type="Title"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
               autoComplete="Title"
             />
@@ -49,6 +50,7 @@ export default function FormPropsTextFields() {
               id="outlined-number"
               label="Number"
               type="number"
+              value={budget}
               onChange={(e) => setBudget(e.target.value)}
               slotProps={{
                 inputLabel: {
@@ -62,6 +64,7 @@ export default function FormPropsTextFields() {
             label="Date"
             type="date"
             defaultValue="Date"
+            value={date}
             helperText="Some important text"
             onChange={(e) => setDate(e.target.value)}
           />
@@ -78,9 +81,9 @@ export default function FormPropsTextFields() {
           expenses.map((expense, index) => {
             return (
               <div key={index}>
-                <strong>{expense.title}</strong>
-                <strong>{expense.budget}</strong>
-                <strong>{expense.date}</strong>
+                <strong>Title:</strong> {expense.title} <br />
+                <strong>Budget:</strong> ₹{expense.budget} <br />
+                <strong>Date:</strong> {expense.date}
               </div>
             );
           })}
