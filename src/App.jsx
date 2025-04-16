@@ -7,54 +7,84 @@ export default function FormPropsTextFields() {
   const [title, setTitle] = useState("");
   const [budget, setBudget] = useState("");
   const [date, setDate] = useState("");
-  const [formClick, setFormClick] = useState(false);
+  const [expenses, setExpenses] = useState([]);
 
-  function onSubmit() {
-    return setFormClick(true);
-  }
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(e);
+
+    const newExpense = {
+      title,
+      budget,
+      date,
+    };
+    setExpenses((prev) => [...prev, newExpense]);
+    setTitle("");
+    setBudget("");
+    setDate("");
+  };
   return (
-    <Box
-      component="form"
-      sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
-      noValidate
-      autoComplete="off"
-      onSubmit={() => onSubmit()}
-    >
-      <div>
-        <FormLabel>
-          Title :
+    <>
+      <Box
+        component="form"
+        sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
+        noValidate
+        autoComplete="off"
+        onSubmit={(e) => onSubmit(e)}
+      >
+        <div>
+          <FormLabel>
+            Title :
+            <TextField
+              id="title"
+              label="Title"
+              type="Title"
+              onChange={(e) => setTitle(e.target.value)}
+              autoComplete="Title"
+            />
+          </FormLabel>
+          <FormLabel>
+            Spent :
+            <TextField
+              id="outlined-number"
+              label="Number"
+              type="number"
+              onChange={(e) => setBudget(e.target.value)}
+              slotProps={{
+                inputLabel: {
+                  shrink: true,
+                },
+              }}
+            />
+          </FormLabel>
           <TextField
-            id="title"
-            label="Title"
-            type="Title"
-            onChange={(e) => setTitle(e.target)}
-            autoComplete="Title"
+            id="Date"
+            label="Date"
+            type="date"
+            defaultValue="Date"
+            helperText="Some important text"
+            onChange={(e) => setDate(e.target.value)}
           />
-        </FormLabel>
-        <FormLabel>
-          Spent :
-          <TextField
-            id="outlined-number"
-            label="Number"
-            type="number"
-            onChange={(e) => setBudget(e.target)}
-            slotProps={{
-              inputLabel: {
-                shrink: true,
-              },
-            }}
-          />
-        </FormLabel>
-        <TextField
-          id="Date"
-          label="Date"
-          type="date"
-          defaultValue="Date"
-          helperText="Some important text"
-          onClick={(e) => setDate(e.target)}
-        />
-      </div>
-      <Button onClick={() => onSubmit()}>Submit</Button>
-    </Box>
+        </div>
+        <Button type="submit">Submit</Button>
+      </Box>
+      {/* Displying Expenses */}
+      <Box
+        sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
+        noValidate
+        autoComplete="off"
+      >
+        {expenses &&
+          expenses.map((expense, index) => {
+            return (
+              <div key={index}>
+                <strong>{expense.title}</strong>
+                <strong>{expense.budget}</strong>
+                <strong>{expense.date}</strong>
+              </div>
+            );
+          })}
+      </Box>
+    </>
   );
 }
